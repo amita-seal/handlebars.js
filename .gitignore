@@ -1,18 +1,14 @@
+vendor
 .rvmrc
 .DS_Store
+lib/handlebars/compiler/parser.js
+/dist/
 /tmp/
+/coverage/
+node_modules
 *.sublime-project
 *.sublime-workspace
 npm-debug.log
+sauce_connect.log*
 .idea
-/yarn-error.log
-/yarn.lock
-node_modules
-/handlebars-release.tgz
-.nyc_output
-
-# Generated files
-/coverage/
-/dist/
-/tests/integration/*/dist/
-/spec/tmp/*
+yarn-error.log

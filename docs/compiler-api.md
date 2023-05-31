@@ -16,34 +16,6 @@ var ast = Handlebars.parse(myTemplate);
 Handlebars.precompile(ast);
 ```
 
-### Parsing
-
-There are two primary APIs that are used to parse an existing template into the AST:
-
-#### parseWithoutProcessing
-
-`Handlebars.parseWithoutProcessing` is the primary mechanism to turn a raw template string into the Handlebars AST described in this document. No processing is done on the resulting AST which makes this ideal for codemod (for source to source transformation) tooling.
-
-Example:
-
-```js
-let ast = Handlebars.parseWithoutProcessing(myTemplate);
-```
-
-#### parse
-
-`Handlebars.parse` will parse the template with `parseWithoutProcessing` (see above) then it will update the AST to strip extraneous whitespace. The whitespace stripping functionality handles two distinct situations:
-
-* Removes whitespace around dynamic statements that are on a line by themselves (aka "stand alone")
-* Applies "whitespace control" characters (i.e. `~`) by truncating the `ContentStatement` `value` property appropriately (e.g. `\n\n{{~foo}}` would have a `ContentStatement` with a `value` of `''`)
-
-`Handlebars.parse` is used internally by `Handlebars.precompile` and `Handlebars.compile`.
-
-Example:
-
-```js
-let ast = Handlebars.parse(myTemplate);
-```
 
 ### Basic
 
@@ -291,7 +263,7 @@ scanner.accept(ast);
 
 The current node's ancestors will be maintained in the `parents` array, with the most recent parent listed first.
 
-The visitor may also be configured to operate in mutation mode by setting the `mutating` field to true. When in this mode, handler methods may return any valid AST node and it will replace the one they are currently operating on. Returning `false` will remove the given value (if valid) and returning `undefined` will leave the node intact. This return structure only apply to mutation mode and non-mutation mode visitors are free to return whatever values they wish.
+The visitor may also be configured to operate in mutation mode by setting the `mutation` field to true. When in this mode, handler methods may return any valid AST node and it will replace the one they are currently operating on. Returning `false` will remove the given value (if valid) and returning `undefined` will leave the node in tact. This return structure only apply to mutation mode and non-mutation mode visitors are free to return whatever values they wish.
 
 Implementors that may need to support mutation mode are encouraged to utilize the `acceptKey`, `acceptRequired` and `acceptArray` helpers which provide the conditional overwrite behavior as well as implement sanity checks where pertinent.
 
@@ -300,7 +272,7 @@ Implementors that may need to support mutation mode are encouraged to utilize th
 The `Handlebars.JavaScriptCompiler` object has a number of methods that may be customized to alter the output of the compiler:
 
 - `nameLookup(parent, name, type)`
-  Used to generate the code to resolve a given path component.
+  Used to generate the code to resolve a give path component.
 
   - `parent` is the existing code in the path resolution
   - `name` is the current path component

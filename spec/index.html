@@ -19,15 +19,13 @@
         document.documentElement.className = 'headless';
       }
     </script>
-    <script src="/node_modules/sinon/pkg/sinon.js"></script>
-    <script src="/node_modules/chai/chai.js"></script>
-    <script src="/node_modules/dirty-chai/lib/dirty-chai.js"></script>
     <script src="/node_modules/mocha/mocha.js"></script>
     <script>
-      window.expect = chai.expect;
       mocha.setup('bdd');
     </script>
     <script src="/dist/handlebars.js"></script>
+
+    <script src="/spec/env/json2.js"></script>
     <script src="/spec/env/common.js"></script>
     <script>
       var CompilerContext = {
@@ -61,7 +59,7 @@
         }
         var runner = mocha.run();
 
-        // Reporting to test-runner
+        //Reporting for saucelabs
         var failedTests = [];
         runner.on('end', function(){
           window.mochaResults = runner.stats;
